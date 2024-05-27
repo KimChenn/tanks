@@ -24,7 +24,7 @@ class Kim_CTankController(TankController):
             if bullet.tank_id == my_tank.id:
                 continue
             if self.will_bullet_hit_me(bullet, my_tank):
-                self.evasion_mode = True  # Enter evasion mode on bullet detection
+                self.evasion_mode = True  
                 return self.avoid_bullet_direction(bullet, my_tank)
         return None
 
@@ -45,7 +45,7 @@ class Kim_CTankController(TankController):
         my_tank = next(tank for tank in gameState.tanks if tank.id == self.id)
 
         if self.evasion_mode and current_time < self.evasion_end_time:
-            return MOVE_BACKWARD  # Continue evasion if within the evasion period
+            return MOVE_BACKWARD  
 
         self.evasion_mode = False
 
@@ -67,14 +67,13 @@ class Kim_CTankController(TankController):
         angle_to_enemy = degrees(atan2(-dy, dx))
         angle_diff = normalize_angle(angle_to_enemy - my_tank.angle)
 
-        # Shoot more often by lowering the alignment threshold and increasing shot frequency
         if distance > max(TANK_SIZE) * 3:
-            if abs(angle_diff) < 20:  # Lower threshold to increase shot opportunities
+            if abs(angle_diff) < 20:  
                 return SHOOT
             elif angle_diff > 0:
                 return TURN_RIGHT
             return TURN_LEFT
         elif distance < max(TANK_SIZE) * 2:
-            return MOVE_BACKWARD  # Maintain distance if too close
-        return MOVE_FORWARD  # Default move if no other action is required
+            return MOVE_BACKWARD  
+        return MOVE_FORWARD  
 
